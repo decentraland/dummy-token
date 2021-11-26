@@ -56,4 +56,13 @@ contract Token {
     function balanceOf(address account) external view returns (uint256) {
         return balances[account];
     }
+
+    /**
+     * A function for creating tokens from thin air and adding them to 
+     * the sender's balance
+     */
+    function mint(uint256 amount) external {
+        balances[msg.sender] += amount;
+        totalSupply += amount;
+    }
 }
