@@ -107,5 +107,22 @@ describe('Token contract', function () {
       const addr2Balance = await hardhatToken.balanceOf(addr2.address)
       expect(addr2Balance).to.equal(50)
     })
+
+    it('Should add to the sender balance and update total supply when minting', async function () {
+      const initialBalance = await hardhatToken.balanceOf(addr1.address)
+      const initialTotalSupply = await hardhatToken.totalSupply()
+
+      expect(initialBalance).to.equal(0)
+      expect(initialTotalSupply).to.equal(1000000)
+
+      // Mint 100 tokens
+      await hardhatToken.connect(addr1).mint(100)
+
+      const finalBalance = await hardhatToken.balanceOf(addr1.address)
+      const finalTotalSupply = await hardhatToken.totalSupply()
+
+      expect(finalBalance).to.equal(100)
+      expect(finalTotalSupply).to.equal(1000100)
+    })
   })
 })
